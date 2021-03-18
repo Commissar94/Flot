@@ -47,30 +47,29 @@ open class Ship() {
     }
 }
 
-class Flot(_ship1: Ship, _ship2: Ship, _ship3: Ship, _ship4: Ship, _ship5: Ship) {
+class Flot(vararg _ships: Ship) {
 
-    private val ship1 = _ship1
-    private val ship2 = _ship2
-    private val ship3 = _ship3
-    private val ship4 = _ship4
-    private val ship5 = _ship5
+    private val ships = _ships
+    private var count = 0
+
+    init {
+        for (ship in ships) {
+            count++
+        }
+    }
 
     fun synchronizedSailOff() {
-        ship1.sailOff()
-        ship2.sailOff()
-        ship3.sailOff()
-        ship4.sailOff()
-        ship5.sailOff()
+        for (ship in ships) {
+            ship.sailOff()
+        }
     }
 
     fun shipsInFlot() {
         println()
-        println("There are 5 ships in this flot: ")
+        println("There are $count ships in this flot: ")
         println()
-        println(ship1.typeOfShip)
-        println(ship2.typeOfShip)
-        println(ship3.typeOfShip)
-        println(ship4.typeOfShip)
-        println(ship5.typeOfShip)
+        for (ship in ships) {
+            println(ship.typeOfShip)
+        }
     }
 }
