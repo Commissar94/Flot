@@ -1,12 +1,9 @@
 fun main() {
 
-    val militaryShip1 = Ship.MilitaryShip()
-    val militaryShip2 = Ship.MilitaryShip()
-    val passengerShip = Ship.PassengerShip()
-    val passengerShip2 = Ship.PassengerShip()
-    val cargoShip = Ship.CargoShip()
-
-    val flot = Flot(militaryShip1, militaryShip2, passengerShip, passengerShip2, cargoShip)
+    val flot = Flot()
+    flot.addShips(Ship.PassengerShip(), Ship.PassengerShip())
+    flot.addShips(Ship.MilitaryShip(), Ship.MilitaryShip())
+    flot.addShips(Ship.CargoShip())
     flot.synchronizedSailOff()
     flot.shipsInFlot()
 }
@@ -47,16 +44,21 @@ open class Ship() {
     }
 }
 
-class Flot(vararg _ships: Ship) {
+class Flot() {
 
-    private val ships = _ships
+    private var ships = listOf<Ship>()
+    private var lastAddedShips: MutableList<Ship> = mutableListOf<Ship>()
     private var count = 0
     private var cargo = 0
-    var military = 0
-    var passenger = 0
+    private var military = 0
+    private var passenger = 0
 
-    init {
-        for (ship in ships) {
+    fun addShips(vararg _ships: Ship) {
+
+        lastAddedShips = _ships.toMutableList()
+        ships += lastAddedShips
+
+        for (ship in lastAddedShips) {
             when (ship.typeOfShip) {
                 "Cargo Ship" -> cargo++
                 "Military Ship" -> military++
@@ -64,6 +66,7 @@ class Flot(vararg _ships: Ship) {
             }
             count++
         }
+        lastAddedShips.clear()
     }
 
     fun synchronizedSailOff() {
@@ -73,7 +76,6 @@ class Flot(vararg _ships: Ship) {
     }
 
     fun shipsInFlot() {
-
         println()
         println("There are $count ships in this flot: ")
         println()
