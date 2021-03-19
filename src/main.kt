@@ -51,9 +51,17 @@ class Flot(vararg _ships: Ship) {
 
     private val ships = _ships
     private var count = 0
+    private var cargo = 0
+    var military = 0
+    var passenger = 0
 
     init {
         for (ship in ships) {
+            when (ship.typeOfShip) {
+                "Cargo Ship" -> cargo++
+                "Military Ship" -> military++
+                "Passenger Ship" -> passenger++
+            }
             count++
         }
     }
@@ -65,11 +73,12 @@ class Flot(vararg _ships: Ship) {
     }
 
     fun shipsInFlot() {
+
         println()
         println("There are $count ships in this flot: ")
         println()
-        for (ship in ships) {
-            println(ship.typeOfShip)
-        }
+        println("Military ships: $military")
+        println("Passenger ships: $passenger")
+        println("Cargo ships: $cargo")
     }
 }
